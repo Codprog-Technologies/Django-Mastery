@@ -1,1 +1,11 @@
 <h1> This is another Heading </h1>
+{% if user.first_name %}
+<p> My name is {{ user.first_name | upper }} {{ user.last_name | title}}</p>
+{% endif %}
+
+<!-- This is a HTML Comment -->
+{# This is a single line comment #}
+{% comment %}
+This is multiline
+comment
+{% endcomment %}

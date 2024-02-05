@@ -13,5 +13,12 @@ def html_view(request):
 
 
 def template_view(request):
-    return render(request, "hotels/template.html")
+    context = {
+        'name': 'John Doe',
+        'user': {
+            'first_name': 'john',
+            'last_name': 'doe'
+        }
+    }
+    return render(request, "hotels/template.html", context)
 
