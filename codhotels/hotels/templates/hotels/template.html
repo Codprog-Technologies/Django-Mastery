@@ -3,6 +3,25 @@
 <p> My name is {{ user.first_name | upper }} {{ user.last_name | title}}</p>
 {% endif %}
 
+<table border="1px">
+    <thead>
+    <tr>
+        <th>Index</th>
+        <th>Name</th>
+        <th>Address</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for hotel in hotels %}
+    <tr>
+        <td>{{ forloop.counter0 }}</td>
+        <td>{{ hotel.name }}</td>
+        <td>{{ hotel.address }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
 <!-- This is a HTML Comment -->
 {# This is a single line comment #}
 {% comment %}

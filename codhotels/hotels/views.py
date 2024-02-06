@@ -18,7 +18,25 @@ def template_view(request):
         'user': {
             'first_name': 'john',
             'last_name': 'doe'
-        }
+        },
+        'hotels': [
+            {
+                'name': 'Taj',
+                'address': 'Mumbai, India'
+            },
+            {
+                'name': 'Sapphire',
+                'address': 'Banglore, India'
+            },
+            {
+                'name': 'Heritage',
+                'address': 'Ahmedabad, India'
+            },
+            {
+                'name': 'Lotus',
+                'address': 'Delhi, India'
+            }
+        ]
     }
     return render(request, "hotels/template.html", context)
 
