@@ -40,3 +40,11 @@ def template_view(request):
     }
     return render(request, "hotels/template.html", context)
 
+
+def home(request):
+    return render(request, "hotels/home.html")
+
+
+def about_us(request):
+    return render(request, "hotels/about.html")
+
