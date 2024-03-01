@@ -10,3 +10,11 @@ class PracticeArea(models.Model):
     """
     name = models.CharField(max_length=25, verbose_name='Name of Law')
     description = models.TextField()
+
+    class Meta:
+        verbose_name = "Practice Area"
+        verbose_name_plural = "Practice Areas"
+        db_table = "appointments_practicearea"
+        constraints = [
+            models.UniqueConstraint(name="pa_name_unq", fields=('name',)),
+        ]
