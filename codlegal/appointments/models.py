@@ -11,6 +11,9 @@ class PracticeArea(models.Model):
     name = models.CharField(max_length=25, verbose_name='Name of Law')
     description = models.TextField()
 
+    def __str__(self):
+        return self.name
+
     class Meta:
         verbose_name = "Practice Area"
         verbose_name_plural = "Practice Areas"
