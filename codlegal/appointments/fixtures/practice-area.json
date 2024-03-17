@@ -1,0 +1,82 @@
+[
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 1,
+    "fields": {
+      "name": "Criminal Law",
+      "description": "Attorneys specializing in criminal law defend individuals accused of committing crimes. They navigate legal proceedings, build defenses, and ensure their clients' rights are protected during investigations, trials, and sentencing."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 2,
+    "fields": {
+      "name": "Family Law",
+      "description": "Family law attorneys handle matters related to domestic relations, including divorce, child custody, spousal support, adoption, and prenuptial agreements. They guide clients through emotionally charged situations, striving for fair resolutions."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 3,
+    "fields": {
+      "name": "Corporate Law",
+      "description": "Lawyers in corporate law advise businesses on legal matters, such as corporate structure, mergers and acquisitions, contracts, and compliance. They play a crucial role in helping companies operate within legal boundaries."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 4,
+    "fields": {
+      "name": "Intellectual Property Law",
+      "description": "Specializing in protecting intellectual assets, intellectual property lawyers work on patents, trademarks, copyrights, and trade secrets. They help clients secure and defend their creative and innovative works."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 5,
+    "fields": {
+      "name": "Real Estate Law",
+      "description": "Real estate attorneys deal with legal issues concerning property, including transactions, zoning laws, property disputes, and landlord-tenant matters. They facilitate smooth real estate transactions and resolve conflicts."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 6,
+    "fields": {
+      "name": "Employment Law",
+      "description": "Attorneys in this field handle issues related to the workplace, including employment contracts, discrimination, wrongful termination, and workplace safety. They advocate for both employers and employees to ensure fair treatment."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 7,
+    "fields": {
+      "name": "Environmental Law",
+      "description": "Environmental lawyers focus on regulations and issues related to the protection of the environment. They may work on cases involving pollution, conservation, and compliance with environmental regulations."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 8,
+    "fields": {
+      "name": "Immigration Law",
+      "description": "Immigration attorneys assist individuals with matters related to visas, citizenship, asylum, and deportation. They navigate the complex legal landscape of immigration to help clients achieve their goals."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 9,
+    "fields": {
+      "name": "Personal Injury Law",
+      "description": "Lawyers specializing in personal injury represent individuals who have been harmed due to the negligence of others. They seek compensation for medical expenses, lost wages, and pain and suffering."
+    }
+  },
+  {
+    "model": "appointments.PracticeArea",
+    "pk": 10,
+    "fields": {
+      "name": "Tax Law",
+      "description": "Tax attorneys provide guidance on tax-related matters, including compliance, disputes with tax authorities, and tax planning. They help individuals and businesses navigate the intricacies of tax codes."
+    }
+  }
+]
