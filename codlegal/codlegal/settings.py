@@ -87,6 +87,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "users",
     "appointments",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -107,6 +108,8 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = "codlegal.urls"
+
+AUTH_USER_MODEL = "users.User"
 
 TEMPLATES = [
     {
