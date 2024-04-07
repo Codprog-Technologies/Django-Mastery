@@ -2,6 +2,8 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render
 
+from users import forms
+
 
 # Create your views here.
 
@@ -19,3 +21,23 @@ def login_view(request):
             return HttpResponse('Invalid Username or Password')
     else:
         return render(request, "users/login.html")
+
+
+def login_view_django_form(request):
+    if request.method == "POST":
+        # 1. validate email + password valid -> authenticate
+        # 2. if valid -> login -> login
+        form = forms.UserAuthenticationForm(data=request.POST)
+        if form.is_valid():
+            login(request, form.get_user())
+            return HttpResponse('Login successful')
+        else:
+            context = {
+                "form": form
+            }
+            return render(request, "users/login_with_django_form.html", context)
+    else:
+        context = {
+            "form": forms.UserAuthenticationForm()
+        }
+        return render(request, "users/login_with_django_form.html", context)
