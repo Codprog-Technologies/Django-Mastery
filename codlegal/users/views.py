@@ -41,3 +41,22 @@ def login_view_django_form(request):
             "form": forms.UserAuthenticationForm()
         }
         return render(request, "users/login_with_django_form.html", context)
+
+
+def signup(request):
+    if request.method == "POST":
+        form = forms.UserSignupForm(data=request.POST)
+        if form.is_valid():
+            # form.save()
+            login(request, form.save())
+            return HttpResponse('Signup Successful')
+        else:
+            context = {
+                "form": form
+            }
+            return render(request, "users/signup.html", context)
+    else:
+        context = {
+            "form": forms.UserSignupForm()
+        }
+        return render(request, "users/signup.html", context)
