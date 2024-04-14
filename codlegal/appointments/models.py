@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 
 
@@ -13,6 +14,11 @@ class PracticeArea(models.Model):
 
     def __str__(self):
         return self.name
+
+    def clean(self):
+        name = self.name  # different from form.
+        # if name == 'Test123':
+        #     raise ValidationError({'name': 'This name is not allowed'})
 
     class Meta:
         verbose_name = "Practice Area"

@@ -13,6 +13,10 @@ class PracticeAreaForm(forms.ModelForm):
             else:
                 bound_field.field.widget.attrs['class'] = 'form-control'
 
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
     class Meta:
         model = models.PracticeArea
         fields = ('name', 'description')  # __all__

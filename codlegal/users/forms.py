@@ -16,7 +16,8 @@ class UserAuthenticationForm(forms.Form):
         return email.lower()
 
     def clean(self):
-        cleaned_data = self.cleaned_data
+        # cleaned_data = self.cleaned_data
+        cleaned_data = super().clean()
         email = cleaned_data.get('email')
         password = cleaned_data.get('password')
         user = authenticate(username=email, password=password)
