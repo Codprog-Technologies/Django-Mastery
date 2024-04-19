@@ -1,0 +1,19 @@
+{% load widget_tweaks %}
+{% if field.use_fieldset %}
+  <fieldset>
+  {% if field.label %}{{ field.legend_tag }}{% endif %}
+{% else %}
+  {% if field.label %}{{ field.label_tag }}{% endif %}
+{% endif %}
+
+
+    {% if field.errors %}
+      {{ field | add_class:"form-control is-invalid"}}
+    {% else %}
+      {{ field | add_class:"form-control" }}
+    {% endif %}
+    <div class="invalid-feedback">
+{{ field.errors }}
+    </div>
+{% if field.help_text %}<small class="form-text text-muted"{% if field.auto_id %} id="{{ field.auto_id }}_helptext"{% endif %}>{{ field.help_text|safe }}</small>{% endif %}
+{% if field.use_fieldset %}</fieldset>{% endif %}
