@@ -1,0 +1,19 @@
+{% if errors and not fields %}
+  <div>{% for field in hidden_fields %}{{ field }}{% endfor %}</div>
+{% endif %}
+{% for field, errors in fields %}
+  <div class="form-group">
+    {{ field.as_field_group }}
+    {% if forloop.last %}
+      {% for field in hidden_fields %}{{ field }}{% endfor %}
+    {% endif %}
+</div>
+{% endfor %}
+{% if not fields and not errors %}
+  {% for field in hidden_fields %}{{ field }}{% endfor %}
+{% endif %}
+{% for error in errors %}
+  <div class="alert alert-warning">
+    {{error}}
+  </div>
+{% endfor %}

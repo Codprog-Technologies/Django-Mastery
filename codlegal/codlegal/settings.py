@@ -89,12 +89,14 @@ ALLOWED_HOSTS = []
 INSTALLED_APPS = [
     "users",
     "appointments",
+    "widget_tweaks",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.forms"
 ]
 
 MIDDLEWARE = [
@@ -126,6 +128,16 @@ TEMPLATES = [
         },
     },
 ]
+
+from django.forms.renderers import TemplatesSetting
+
+
+class CustomFormRenderer(TemplatesSetting):
+    form_template_name = "form.html"
+    field_template_name = "field.html"
+
+
+FORM_RENDERER = "codlegal.settings.CustomFormRenderer"
 
 WSGI_APPLICATION = "codlegal.wsgi.application"
 
