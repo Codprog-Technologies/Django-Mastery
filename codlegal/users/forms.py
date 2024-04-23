@@ -18,8 +18,8 @@ class UserAuthenticationForm(forms.Form):
         # validation
         # transformation
         email = self.cleaned_data.get('email')
-        raise forms.ValidationError('Email Is Invalid')
-        # return email.lower()
+        # raise forms.ValidationError('Email Is Invalid')
+        return email.lower()
 
     def clean(self):
         # cleaned_data = self.cleaned_data
@@ -38,16 +38,19 @@ class UserAuthenticationForm(forms.Form):
 
 class UserSignupForm(BaseUserCreationForm):
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        for bound_field in self.visible_fields():
-            if bound_field.field.widget.attrs.get('class'):
-                bound_field.field.widget.attrs['class'] += ' form-control'
-            else:
-                bound_field.field.widget.attrs['class'] = 'form-control'
+    # def __init__(self, *args, **kwargs):
+    #     super().__init__(*args, **kwargs)
+    #     for bound_field in self.visible_fields():
+    #         if bound_field.field.widget.attrs.get('class'):
+    #             bound_field.field.widget.attrs['class'] += ' form-control'
+    #         else:
+    #             bound_field.field.widget.attrs['class'] = 'form-control'
 
     class Meta:
         # model = models.User # get_user_model()
         model = get_user_model()
         fields = ("email", "first_name", "last_name", "dob")
         # exclude = ("last_login", "password", "date_joined")
+        # widgets = {
+        #     'dob': forms.DateInput(attrs={"type":"date"})
+        # }
