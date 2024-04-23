@@ -2,7 +2,7 @@
   <div>{% for field in hidden_fields %}{{ field }}{% endfor %}</div>
 {% endif %}
 {% for field, errors in fields %}
-  <div class="form-group">
+  <div class="mb-3">
     {{ field.as_field_group }}
     {% if forloop.last %}
       {% for field in hidden_fields %}{{ field }}{% endfor %}

@@ -13,7 +13,7 @@
       {{ field | add_class:"form-control" }}
     {% endif %}
     <div class="invalid-feedback">
-{{ field.errors }}
+        {{ field.errors }}
     </div>
 {% if field.help_text %}<small class="form-text text-muted"{% if field.auto_id %} id="{{ field.auto_id }}_helptext"{% endif %}>{{ field.help_text|safe }}</small>{% endif %}
 {% if field.use_fieldset %}</fieldset>{% endif %}

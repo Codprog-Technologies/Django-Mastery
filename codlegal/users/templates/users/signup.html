@@ -1,12 +1,44 @@
 {% extends "base.html" %}
+{% load widget_tweaks %}
 
 {%block title %} CodLegal | Signup {%endblock%}
 
 {%block content %}
 <h2>SignUp</h2>
-<form method="POST">
+<form class="row g-3" method="POST">
     {% csrf_token %}
+    {% comment %}
     {{form}}
+    email, first_name, last_name, dob, password1 and password2
+    {% endcomment %}
+
+    <div class="col-md-12">
+        {{form.email.as_field_group}}
+    </div>
+    <div class="col-md-4">
+        {{form.first_name.as_field_group}}
+    </div>
+    <div class="col-md-4">
+        {{form.last_name.as_field_group}}
+    </div>
+    <div class="col-md-4">
+        {{ form.dob.label_tag }}
+        {% if field.errors %}
+            {% render_field form.dob class+="form-control is-invalid" type="date" %}
+            <div class="invalid-feedback">
+                {{ field.errors }}
+            </div>
+        {% else %}
+          <input id={{form.dob.id_for_label}} name="dob" class="form-control" type="date" >
+        {% endif %}
+    </div>
+    <div class="col-md-6">
+        {{form.password1.as_field_group}}
+    </div>
+    <div class="col-md-6">
+        {{form.password2.as_field_group}}
+    </div>
+
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {%endblock%}
