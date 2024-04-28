@@ -34,9 +34,15 @@ class CustomUserManager(UserManager):
 
 
 class User(AbstractUser):
+
+    class RoleChoices(models.TextChoices):
+        ADVOCATE = "AD", "Advocate"
+        CLIENT = "CL", "Client"
+
     username = None
     email = models.EmailField(_("email address"), blank=False, unique=True)
     dob = models.DateField(null=True, verbose_name="Date of Birth")
+    role = models.CharField(max_length=2, choices=RoleChoices, blank=True)
 
     REQUIRED_FIELDS = ["dob"]
     USERNAME_FIELD = "email"
