@@ -11,7 +11,7 @@ from users import models
 class CustomUserAdmin(UserAdmin):
     fieldsets = (
         (None, {"fields": ("password", )}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "email")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "email", "role")}),
         (
             _("Permissions"),
             {
