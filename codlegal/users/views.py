@@ -60,3 +60,38 @@ def signup(request):
             "form": forms.UserSignupForm()
         }
         return render(request, "users/signup.html", context)
+
+def advocate_signup(request):
+    if request.method == "POST":
+        form = forms.AdvocateSignup(data=request.POST)
+        if form.is_valid():
+            # form.save()
+            login(request, form.save())
+            return HttpResponse('Signup Successful')
+        else:
+            context = {
+                "form": form
+            }
+    else:
+        context = {
+            "form": forms.AdvocateSignup()
+        }
+    return render(request, "users/signup.html", context)
+
+
+def client_signup(request):
+    if request.method == "POST":
+        form = forms.ClientSignup(data=request.POST)
+        if form.is_valid():
+            # form.save()
+            login(request, form.save())
+            return HttpResponse('Signup Successful')
+        else:
+            context = {
+                "form": form
+            }
+    else:
+        context = {
+            "form": forms.ClientSignup()
+        }
+    return render(request, "users/signup.html", context)

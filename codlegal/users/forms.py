@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import BaseUserCreationForm
 from django.core import validators
-
 from users import models
 
 
@@ -37,7 +36,6 @@ class UserAuthenticationForm(forms.Form):
 
 
 class UserSignupForm(BaseUserCreationForm):
-
     # def __init__(self, *args, **kwargs):
     #     super().__init__(*args, **kwargs)
     #     for bound_field in self.visible_fields():
@@ -54,3 +52,23 @@ class UserSignupForm(BaseUserCreationForm):
         # widgets = {
         #     'dob': forms.DateInput(attrs={"type":"date"})
         # }
+
+
+class AdvocateSignup(UserSignupForm):
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = models.User.RoleChoices.ADVOCATE  # AD
+        if commit:
+            user.save()
+        return user
+
+
+class ClientSignup(UserSignupForm):
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.role = models.User.RoleChoices.CLIENT
+        if commit:
+            user.save()
+        return user
