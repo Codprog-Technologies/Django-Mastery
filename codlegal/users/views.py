@@ -61,6 +61,7 @@ def signup(request):
         }
         return render(request, "users/signup.html", context)
 
+
 def advocate_signup(request):
     if request.method == "POST":
         form = forms.AdvocateSignup(data=request.POST)
@@ -95,3 +96,19 @@ def client_signup(request):
             "form": forms.ClientSignup()
         }
     return render(request, "users/signup.html", context)
+
+
+def update_account(request):
+    user = request.user
+    if request.method == "POST":
+        form = forms.UserUpdateForm(data=request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+        context = {
+            "form": form
+        }
+    else:
+        context = {
+            "form": forms.UserUpdateForm(instance=user)
+        }
+    return render(request, "users/update_profile.html", context)

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import BaseUserCreationForm
 from django.core import validators
+
 from users import models
 
 
@@ -72,3 +73,9 @@ class ClientSignup(UserSignupForm):
         if commit:
             user.save()
         return user
+
+
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model = models.User
+        fields = ("first_name", "last_name")
