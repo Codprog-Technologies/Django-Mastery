@@ -39,3 +39,5 @@ class CustomUserAdmin(UserAdmin):
     search_fields = ("first_name", "last_name", "email")
     ordering = ("pk",)
 
+
+admin.site.register(models.AdvocateProfile)
