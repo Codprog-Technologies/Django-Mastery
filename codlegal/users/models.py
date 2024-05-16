@@ -55,5 +55,5 @@ class AdvocateProfile(models.Model):
     website_url = models.URLField()
     practicing_from = models.DateField()
     educational_qualifications = models.CharField(max_length=30)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="advocate_profile")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
