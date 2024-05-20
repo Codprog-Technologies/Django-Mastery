@@ -79,3 +79,12 @@ class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = models.User
         fields = ("first_name", "last_name")
+
+
+class AdvocateProfileForm(forms.ModelForm):
+    class Meta:
+        model = models.AdvocateProfile
+        exclude = ("user",)
+        widgets = {
+            'practicing_from': forms.DateInput(attrs={"type": "date"})
+        }

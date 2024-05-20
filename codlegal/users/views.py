@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login
 from django.http import HttpResponse
 from django.shortcuts import render
 
-from users import forms
+from users import forms, models
 
 
 # Create your views here.
@@ -65,17 +65,23 @@ def signup(request):
 def advocate_signup(request):
     if request.method == "POST":
         form = forms.AdvocateSignup(data=request.POST)
-        if form.is_valid():
-            # form.save()
-            login(request, form.save())
+        advocate_profile_form = forms.AdvocateProfileForm(data=request.POST)
+        if form.is_valid() and advocate_profile_form.is_valid():
+            user = form.save()
+            advocate_profile = advocate_profile_form.save(commit=False)
+            advocate_profile.user = user
+            advocate_profile.save()
+            login(request, user)
             return HttpResponse('Signup Successful')
         else:
             context = {
-                "form": form
+                "form": form,
+                "advocate_profile_form": advocate_profile_form
             }
     else:
         context = {
-            "form": forms.AdvocateSignup()
+            "form": forms.AdvocateSignup(),
+            "advocate_profile_form": forms.AdvocateProfileForm()
         }
     return render(request, "users/signup.html", context)
 
@@ -100,15 +106,27 @@ def client_signup(request):
 
 def update_account(request):
     user = request.user
+    if request.user.role == models.User.RoleChoices.ADVOCATE:
+        is_adv = True
+    else:
+        is_adv = False
     if request.method == "POST":
         form = forms.UserUpdateForm(data=request.POST, instance=user)
-        if form.is_valid():
-            form.save()
+        if is_adv:
+            advocate_profile_form = forms.AdvocateProfileForm(data=request.POST, instance=request.user.advocate_profile)
+            if form.is_valid() and advocate_profile_form.is_valid():
+                form.save()
+                advocate_profile_form.save()
+        else:
+            if form.is_valid():
+                form.save()
         context = {
-            "form": form
+            "form": form,
+            "advocate_profile_form": advocate_profile_form if is_adv else None
         }
     else:
         context = {
-            "form": forms.UserUpdateForm(instance=user)
+            "form": forms.UserUpdateForm(instance=user),
+            "advocate_profile_form": forms.AdvocateProfileForm(instance=user.advocate_profile) if is_adv else None
         }
     return render(request, "users/update_profile.html", context)
