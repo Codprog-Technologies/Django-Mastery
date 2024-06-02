@@ -41,3 +41,4 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(models.AdvocateProfile)
+admin.site.register(models.PhoneNumber)
