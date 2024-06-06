@@ -8,7 +8,11 @@
 <form method="POST">
     {% csrf_token %}
     {{form}}
-    {{advocate_profile_form}}
+    {% if advocate_profile_form %}
+        {{advocate_profile_form}}
+    {% endif %}
+    {{phone_number_form1}}
+    {{phone_number_form2}}
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {%endblock%}
