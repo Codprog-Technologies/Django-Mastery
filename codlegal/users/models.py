@@ -52,7 +52,7 @@ class User(AbstractUser):
 
 
 class PhoneNumber(models.Model):
-    number = models.CharField(max_length=20, validators=[validators.MinLengthValidator(9)])
+    number = models.CharField("Phone Number", max_length=20, validators=[validators.MinLengthValidator(9)])
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="phone_number_set")
 
 

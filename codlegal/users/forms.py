@@ -88,3 +88,16 @@ class AdvocateProfileForm(forms.ModelForm):
         widgets = {
             'practicing_from': forms.DateInput(attrs={"type": "date"})
         }
+
+
+class PhoneNumberForm(forms.ModelForm):
+    class Meta:
+        model = models.PhoneNumber
+        exclude = ["user"]
+
+class PhoneNumberOptionalForm(forms.ModelForm):
+    number = forms.CharField(label="Phone Number", max_length=20, validators=[validators.MinLengthValidator(9)],
+                             required=False)
+    class Meta:
+        model = models.PhoneNumber
+        exclude = ["user"]
