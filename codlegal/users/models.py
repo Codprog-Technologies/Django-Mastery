@@ -4,6 +4,8 @@ from django.core import validators
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
+from appointments.models import PracticeArea
+
 
 # Create your models here.
 class CustomUserManager(UserManager):
@@ -63,3 +65,4 @@ class AdvocateProfile(models.Model):
     educational_qualifications = models.CharField(max_length=30)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="advocate_profile")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
+    practice_areas = models.ManyToManyField(PracticeArea)
