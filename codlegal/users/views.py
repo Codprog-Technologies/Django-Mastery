@@ -72,6 +72,7 @@ def advocate_signup(request):
             advocate_profile = advocate_profile_form.save(commit=False)
             advocate_profile.user = user
             advocate_profile.save()
+            advocate_profile_form.save_m2m()
             phone_number = phone_number_form.save(commit=False)
             phone_number.user = user
             phone_number.save()
@@ -136,7 +137,9 @@ def update_account(request):
             if form.is_valid() and advocate_profile_form.is_valid() and phone_number_form1.is_valid() and\
                         (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
                 form.save()
-                phone_number_form1.save()
+                phone_number = phone_number_form1.save(commit=False)
+                phone_number.user = user
+                phone_number.save()
                 advocate_profile_form.save()
                 if phone_number_form2.has_changed():
                     phone_number2 = phone_number_form2.save(commit=False)
