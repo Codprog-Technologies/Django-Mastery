@@ -65,4 +65,4 @@ class AdvocateProfile(models.Model):
     educational_qualifications = models.CharField(max_length=30)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="advocate_profile")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
-    practice_areas = models.ManyToManyField(PracticeArea)
+    practice_areas = models.ManyToManyField(PracticeArea, related_name="advocate_profile_set")
