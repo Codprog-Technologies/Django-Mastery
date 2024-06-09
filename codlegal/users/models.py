@@ -55,7 +55,7 @@ class User(AbstractUser):
 
 class PhoneNumber(models.Model):
     number = models.CharField("Phone Number", max_length=20, validators=[validators.MinLengthValidator(9)])
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="phone_number_set")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="phone_number_set", related_query_name="phone_number")
 
 
 class AdvocateProfile(models.Model):
@@ -63,6 +63,6 @@ class AdvocateProfile(models.Model):
     website_url = models.URLField()
     practicing_from = models.DateField()
     educational_qualifications = models.CharField(max_length=30)
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="advocate_profile")
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="advocate_profile", related_query_name="advocate_profile")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
-    practice_areas = models.ManyToManyField(PracticeArea, related_name="advocate_profile_set")
+    practice_areas = models.ManyToManyField(PracticeArea, related_name="advocate_profile_set", related_query_name="advocate_profile")
