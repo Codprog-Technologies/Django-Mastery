@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render
 
@@ -62,6 +63,7 @@ def signup(request):
         return render(request, "users/signup.html", context)
 
 
+@transaction.atomic
 def advocate_signup(request):
     if request.method == "POST":
         form = forms.AdvocateSignup(data=request.POST)
@@ -69,6 +71,7 @@ def advocate_signup(request):
         phone_number_form = forms.PhoneNumberForm(data=request.POST)
         if form.is_valid() and advocate_profile_form.is_valid() and phone_number_form.is_valid():
             user = form.save()
+            # raise Exception()
             advocate_profile = advocate_profile_form.save(commit=False)
             advocate_profile.user = user
             advocate_profile.save()
