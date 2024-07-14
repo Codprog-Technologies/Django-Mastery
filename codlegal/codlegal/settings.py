@@ -129,6 +129,8 @@ TEMPLATES = [
     },
 ]
 
+LOGIN_URL = "/users/login/"
+
 from django.forms.renderers import TemplatesSetting
 
 
