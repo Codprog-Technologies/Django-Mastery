@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, redirect
 
 from users import forms, models
 
@@ -32,7 +32,12 @@ def login_view_django_form(request):
         form = forms.UserAuthenticationForm(data=request.POST)
         if form.is_valid():
             login(request, form.get_user())
-            return HttpResponse('Login successful')
+            next = ""
+            if request.GET:
+                next = request.GET["next"]
+            if next:
+                return HttpResponseRedirect(next)
+            return redirect("home")
         else:
             context = {
                 "form": form
