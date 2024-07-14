@@ -1,8 +1,9 @@
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.views.decorators.http import require_http_methods
 
 from users import forms, models
 
@@ -48,6 +49,13 @@ def login_view_django_form(request):
             "form": forms.UserAuthenticationForm()
         }
         return render(request, "users/login_with_django_form.html", context)
+
+
+@require_http_methods(["POST"])
+def logout_view(request):
+    if request.method == "POST":
+        logout(request)
+    return redirect("home")
 
 
 def signup(request):

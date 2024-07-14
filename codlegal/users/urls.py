@@ -4,6 +4,7 @@ from users import views
 
 urlpatterns = [
     path("login/", views.login_view_django_form, name="login"),
+    path("logout/", views.logout_view, name="logout"),
     # path("signup/", views.signup, name="signup"),
     path("signup/advocate/", views.advocate_signup, name="advocate_signup"),
     path("signup/client/", views.client_signup, name="client_signup"),

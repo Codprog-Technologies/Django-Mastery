@@ -39,6 +39,10 @@
                     </div>
                     {% else %}
                         <a class="nav-link" href="{% url 'update_account' %}">My Account</a>
+                        <form action="{% url 'logout' %}" style="margin-bottom:0;" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link" style="background:none;border:none;">Logout</button>
+                        </form>
                     {% endif %}
                 </div>
             </div>
