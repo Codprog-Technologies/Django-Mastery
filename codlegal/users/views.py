@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
 from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -120,6 +121,7 @@ def client_signup(request):
     return render(request, "users/signup.html", context)
 
 
+@login_required
 def update_account(request):
     user = request.user
     phone_numbers = user.phone_number_set.all().order_by("id")
