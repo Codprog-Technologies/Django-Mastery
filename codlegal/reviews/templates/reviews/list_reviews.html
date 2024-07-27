@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{%block title %} CodLegal | List Feedbacks {%endblock%}
+
+{%block content %}
+
+<h2> User Reviews ! </h2>
+<br/>
+<div class="row">
+    {% for review in reviews %}
+    <div class="col-sm-6 my-3">
+        <div class="card">
+            <div class="card-header">
+                {{review.user.first_name}} {{review.user.last_name}}
+            </div>
+            <div class="card-body">
+                <p class="card-text">{{review.description}}</p>
+                <a href="{% url 'update_app_review' pk=review.id %}" class="btn btn-primary">Edit</a>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}
