@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 
 from reviews import forms, models
@@ -9,6 +10,8 @@ from reviews import forms, models
 @login_required
 def submit_app_review(request):
     user = request.user
+    if not user.has_perm("reviews.add_platformreview"):
+        raise PermissionDenied()
     if request.method == "POST":
         review_form = forms.PlatformReviewForm(data=request.POST)
         if review_form.is_valid():
