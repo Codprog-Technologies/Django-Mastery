@@ -1,4 +1,4 @@
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import render
 
@@ -10,7 +10,7 @@ from reviews import forms, models
 @login_required
 def submit_app_review(request):
     user = request.user
-    if not user.has_perm("reviews.add_platformreview"):
+    if not user.has_perms(["reviews.add_platformreview"]):
         raise PermissionDenied()
     if request.method == "POST":
         review_form = forms.PlatformReviewForm(data=request.POST)
@@ -23,6 +23,7 @@ def submit_app_review(request):
     return render(request, "reviews/submit_review.html", {"form": review_form})
 
 
+@permission_required(["reviews.view_platformreview"], raise_exception=True)
 def view_app_reviews(request):
     reviews = models.PlatformReview.objects.all()
     return render(request, "reviews/list_reviews.html", context={"reviews": reviews})
