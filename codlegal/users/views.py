@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import Permission
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -119,6 +120,10 @@ def client_signup(request):
             phone_number = phone_number_form.save(commit=False)
             phone_number.user = user
             phone_number.save()
+            permission = Permission.objects.get(codename="view_platformreview")
+            user.user_permissions.add(permission)
+            permission = Permission.objects.get(codename="add_platformreview")
+            user.user_permissions.add(permission)
             login(request, user)
             return HttpResponse('Signup Successful')
         else:
