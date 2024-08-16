@@ -28,8 +28,11 @@ def view_app_reviews(request):
     reviews = models.PlatformReview.objects.all()
     return render(request, "reviews/list_reviews.html", context={"reviews": reviews})
 
+@permission_required(["reviews.change_platformreview"], raise_exception=True)
 def update_app_review(request, pk):
     review = models.PlatformReview.objects.get(pk=pk)
+    if request.user.pk != review.user.pk:
+        raise PermissionDenied()
     if request.method == "POST":
         review_form = forms.PlatformReviewForm(data=request.POST, instance=review)
         if review_form.is_valid():
