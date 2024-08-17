@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic import CreateView
 
 from appointments import models, forms
 
@@ -33,3 +34,12 @@ def practice_area(request):
             "form": forms.PracticeAreaForm()
         }
         return render(request, "appointments/practice_area.html", context)
+
+
+class PracticeAreaView(CreateView):
+    template_name = "appointments/practice_area.html"
+    form_class = forms.PracticeAreaForm
+
+    def get_success_url(self):
+        return self.request.get_full_path()
+
