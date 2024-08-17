@@ -39,16 +39,22 @@
                     </div>
                     {% else %}
                     <a class="nav-link" href="{% url 'update_account' %}">My Account</a>
+                    {% if perms.reviews %}
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink2" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
                             Feedbacks
                         </a>
                         <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink2">
+                            {% if perms.reviews.add_platformreview %}
                             <li><a class="dropdown-item" href="{% url 'submit_app_review' %}">Submit Feedback</a></li>
+                            {% endif %}
+                            {% if perms.reviews.view_platformreview %}
                             <li><a class="dropdown-item" href="{% url 'view_app_reviews' %}">View Feedbacks</a></li>
+                            {% endif %}
                         </ul>
                     </div>
+                    {% endif %}
                     <form action="{% url 'logout' %}" style="margin-bottom:0;" method="POST">
                         {% csrf_token %}
                         <button type="submit" class="nav-link" style="background:none;border:none;">Logout</button>
