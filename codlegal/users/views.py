@@ -5,6 +5,7 @@ from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
+from django.views.generic import DetailView
 
 from users import forms, models
 
@@ -153,12 +154,13 @@ def update_account(request):
                                                    label_suffix=" 1", prefix="1",
                                                    instance=phone_numbers[0] if phone_numbers else None)
         phone_number_form2 = forms.PhoneNumberOptionalForm(data=request.POST,
-                                                   label_suffix=" 2", prefix="2",
-                                                   instance=phone_numbers[1] if len(phone_numbers) > 1 else None)
+                                                           label_suffix=" 2", prefix="2",
+                                                           instance=phone_numbers[1] if len(
+                                                               phone_numbers) > 1 else None)
         if is_adv:
             advocate_profile_form = forms.AdvocateProfileForm(data=request.POST, instance=request.user.advocate_profile)
-            if form.is_valid() and advocate_profile_form.is_valid() and phone_number_form1.is_valid() and\
-                        (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
+            if form.is_valid() and advocate_profile_form.is_valid() and phone_number_form1.is_valid() and \
+                    (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
                 form.save()
                 phone_number = phone_number_form1.save(commit=False)
                 phone_number.user = user
@@ -189,7 +191,17 @@ def update_account(request):
             "advocate_profile_form": forms.AdvocateProfileForm(instance=user.advocate_profile) if is_adv else None,
             "phone_number_form1": forms.PhoneNumberForm(instance=phone_numbers[0] if phone_numbers else None,
                                                         label_suffix=" 1", prefix="1"),
-            "phone_number_form2": forms.PhoneNumberOptionalForm(instance=phone_numbers[1] if len(phone_numbers) > 1 else None,
-                                                        label_suffix=" 2", prefix="2")
+            "phone_number_form2": forms.PhoneNumberOptionalForm(
+                instance=phone_numbers[1] if len(phone_numbers) > 1 else None,
+                label_suffix=" 2", prefix="2")
         }
     return render(request, "users/update_profile.html", context)
+
+
+class AdvocateDetailView(DetailView):
+    template_name = "users/advocate_details.html"
+    model = models.User
+    context_object_name = "advocate_user"
+
+    def get_queryset(self):
+        return super().get_queryset().filter(role=models.User.RoleChoices.ADVOCATE)
