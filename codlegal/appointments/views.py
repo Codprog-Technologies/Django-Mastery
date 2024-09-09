@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.views.generic import CreateView
+from django.views.generic import CreateView, TemplateView
 
 from appointments import models, forms
 
@@ -14,8 +14,21 @@ def home(request):
     return render(request, "appointments/home.html", context=context)
 
 
+class HomePage(TemplateView):
+    template_name = "appointments/home.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['practice_areas'] = models.PracticeArea.objects.all()
+        return context
+
+
 def about(request):
     return render(request, "appointments/about.html")
+
+
+class AboutPage(TemplateView):
+    template_name = "appointments/about.html"
 
 
 def practice_area(request):
@@ -42,4 +55,3 @@ class PracticeAreaView(CreateView):
 
     def get_success_url(self):
         return self.request.get_full_path()
-
