@@ -5,7 +5,7 @@ from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_http_methods
-from django.views.generic import DetailView
+from django.views.generic import DetailView, ListView
 
 from users import forms, models
 
@@ -205,3 +205,11 @@ class AdvocateDetailView(DetailView):
 
     def get_queryset(self):
         return super().get_queryset().filter(role=models.User.RoleChoices.ADVOCATE)
+
+
+class AdvocateListView(ListView):
+    template_name = "users/advocate_list.html"
+    # model = models.User
+    queryset = models.User.objects.filter(role=models.User.RoleChoices.ADVOCATE)
+    context_object_name = "advocate_list"
+    paginate_by = 4

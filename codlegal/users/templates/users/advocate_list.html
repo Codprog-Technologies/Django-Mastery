@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{%block title %} CodLegal | Advocate List {%endblock%}
+
+{%block content %}
+<div class="row">
+    {% for advocate_user in advocate_list%}
+    <div class="col-md-6 my-3">
+        <div class="card">
+            <div class="card-header"><b>{{advocate_user.first_name| upper}} {{advocate_user.last_name | upper}}</b>
+            </div>
+            <div class="card-body" style="height:100px">
+                <ul class="list-group list-group-flush">
+                    {% if advocate_user.advocate_profile.practice_areas.all %}
+                    <li class="list-group-item">Practices
+                        {% for area in advocate_user.advocate_profile.practice_areas.all %}
+                        {{area}}
+                        {% if not forloop.last %}
+                        {% if forloop.revcounter == 2 %} and
+                        {% else %},
+                        {% endif %}
+                        {% else %}
+                        {% endif %}
+                        {% endfor %}
+                        {% endif %}
+                    </li>
+                    <li class="list-group-item">Educational Qualifications:
+                        {{advocate_user.advocate_profile.educational_qualifications}}
+                    </li>
+                </ul>
+            </div>
+            <div class="card-footer bg-transparent">
+                <a href="{% url 'advocate_detail' pk=advocate_user.pk %}">Advocate Details</a>
+            </div>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+{%endblock%}
