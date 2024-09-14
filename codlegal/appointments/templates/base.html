@@ -69,6 +69,14 @@
 
 <main>
     <div class="container vh-100 mt-5">
+        {% if messages %}
+        <div class="messages">
+            {% for message in messages %}
+            <div
+                {% if message.tags %} class="alert {{ message.tags }}"{% endif %}>{{ message }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
         {%block content %} CodLegal {%endblock%}
     </div>
 </main>

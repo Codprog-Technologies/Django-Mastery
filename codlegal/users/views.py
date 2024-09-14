@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import Permission
@@ -170,6 +171,7 @@ def update_account(request):
                     phone_number2 = phone_number_form2.save(commit=False)
                     phone_number2.user = user
                     phone_number2.save()
+                messages.success(request, "Your profile was updated.")
         else:
             if form.is_valid() and phone_number_form1.is_valid() and \
                     (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
@@ -179,6 +181,7 @@ def update_account(request):
                     phone_number2 = phone_number_form2.save(commit=False)
                     phone_number2.user = user
                     phone_number2.save()
+                messages.success(request, "Your profile was updated.")
         context = {
             "form": form,
             "advocate_profile_form": advocate_profile_form if is_adv else None,
