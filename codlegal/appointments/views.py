@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic import CreateView, TemplateView
 
 from appointments import models, forms
@@ -55,3 +56,15 @@ class PracticeAreaView(CreateView):
 
     def get_success_url(self):
         return self.request.get_full_path()
+
+
+class AppointmentCreateView(CreateView):
+    model = models.Appointment
+    fields = ["advocate", "start_at"]
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def form_valid(self, form):
+        form.instance.client = self.request.user
+        return super().form_valid(form)
