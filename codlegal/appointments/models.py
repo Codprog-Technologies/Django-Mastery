@@ -1,5 +1,9 @@
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.db import models
+from django.utils import timezone
+
+from users.models import User
 
 
 # Create your models here.
@@ -27,3 +31,16 @@ class PracticeArea(models.Model):
         constraints = [
             models.UniqueConstraint(name="pa_name_unq", fields=('name',)),
         ]
+
+
+class Appointment(models.Model):
+    client = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+",
+                               limit_choices_to={'role': User.RoleChoices.CLIENT})
+    advocate = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="+",
+                                 limit_choices_to={'role': User.RoleChoices.ADVOCATE})
+    start_at = models.DateTimeField()
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def clean(self):
+        if self.start_at < timezone.now():
+            raise ValidationError({'start_at': 'Start Time should be of Future.'})
