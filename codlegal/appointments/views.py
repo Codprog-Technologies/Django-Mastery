@@ -1,3 +1,5 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
@@ -58,9 +60,10 @@ class PracticeAreaView(CreateView):
         return self.request.get_full_path()
 
 
-class AppointmentCreateView(CreateView):
+class AppointmentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView):
     model = models.Appointment
     fields = ["advocate", "start_at"]
+    success_message = "Appointment was created Successfully"
 
     def get_success_url(self):
         return reverse('home')
