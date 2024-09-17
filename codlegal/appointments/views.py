@@ -3,9 +3,11 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.urls import reverse
-from django.views.generic import CreateView, TemplateView
+from django.utils import timezone
+from django.views.generic import CreateView, TemplateView, ListView
 
 from appointments import models, forms
+from users.models import User
 
 
 # Create your views here.
@@ -71,3 +73,18 @@ class AppointmentCreateView(LoginRequiredMixin, SuccessMessageMixin, CreateView)
     def form_valid(self, form):
         form.instance.client = self.request.user
         return super().form_valid(form)
+
+
+class UpcomingAppointmentListView(LoginRequiredMixin, ListView):
+    model = models.Appointment
+    paginate_by = 4
+    ordering = ["start_at"]
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        logged_in_user = self.request.user
+        if logged_in_user.role == User.RoleChoices.CLIENT:
+            return queryset.filter(client=logged_in_user, start_at__gt=timezone.now())
+        elif logged_in_user.role == User.RoleChoices.ADVOCATE:
+            return queryset.filter(advocate=logged_in_user, start_at__gt=timezone.now())
+        return queryset.none()
