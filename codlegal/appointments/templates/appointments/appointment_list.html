@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{%block title %} CodLegal | Upcoming Appointments {%endblock%}
+
+{% block content %}
+<div class="row">
+    {% for appointment in object_list %}
+        <div class="col-sm-6 my-3">
+            <div class="card">
+                <div class="card-header">Appointment with id {{appointment.pk}} at {{appointment.start_at}}</div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                    <li class="list-group-item">This appointment was created on {{appointment.created_at}}</li>
+                    <li class="list-group-item">Advocate Name: {{appointment.advocate.first_name}} {{appointment.advocate.last_name}}</li>
+                    <li class="list-group-item">Client Name: {{appointment.client.first_name}} {{appointment.client.last_name}}</li>
+                    <li class="list-group-item">Client Email: {{appointment.client.email}}</li>
+                    {% if appointment.client.phone_number_set.all %}
+                        <li class="list-group-item">Client Contact Numbers:
+                            {% for phone_number in appointment.client.phone_number_set.all %}
+                                {{phone_number.number}}
+                                {% if not forloop.last %}
+                                    {% if forloop.revcounter == 2 %} and
+                                    {% else %},
+                                    {% endif %}
+                                {% else %}
+                                {% endif %}
+                              {% endfor %}
+                        </li>
+                    {% else %}
+                        <li class="list-group-item">Contact Numbers not found</li>
+                    {% endif %}
+                        </ul>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+{# Pagination Controls #}
+{% if page_obj.has_other_pages %}
+    <div class="btn-group" role="group" aria-label="Item pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-outline-primary">&laquo;</a>
+        {% endif %}
+
+        {% for page_number in page_obj.paginator.page_range %}
+            {% if page_obj.number == page_number %}
+                <button class="btn btn-outline-primary active">
+                    <span>{{ page_number }} </span>
+                </button>
+            {% else %}
+                <a href="?page={{ page_number }}" class="btn btn-outline-primary">
+                    {{ page_number }}
+                </a>
+            {% endif %}
+        {% endfor %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-outline-primary">&raquo;</a>
+        {% endif %}
+    </div>
+    {% endif %}
+
+{%endblock%}

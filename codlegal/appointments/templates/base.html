@@ -39,6 +39,7 @@
                         </ul>
                     </div>
                     {% else %}
+                    <a class="nav-link" href="{% url 'appointment_list' %}">My Appointments</a>
                     <a class="nav-link" href="{% url 'update_account' %}">My Account</a>
                     {% if perms.reviews %}
                     <div class="nav-item dropdown">
