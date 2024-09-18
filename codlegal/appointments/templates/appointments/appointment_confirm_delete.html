@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{%block title %} CodLegal | Appointment Delete {%endblock%}
+
+{%block content %}
+
+<form method="POST">
+    {% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+{%endblock%}
