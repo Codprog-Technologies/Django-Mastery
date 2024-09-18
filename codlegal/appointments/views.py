@@ -2,9 +2,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.shortcuts import render
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
-from django.views.generic import CreateView, TemplateView, ListView
+from django.views.generic import CreateView, TemplateView, ListView, DeleteView
 
 from appointments import models, forms
 from users.models import User
@@ -88,3 +88,9 @@ class UpcomingAppointmentListView(LoginRequiredMixin, ListView):
         elif logged_in_user.role == User.RoleChoices.ADVOCATE:
             return queryset.filter(advocate=logged_in_user, start_at__gt=timezone.now())
         return queryset.none()
+
+
+class AppointmentDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+    model = models.Appointment
+    success_url = reverse_lazy("appointment_list")
+    success_message = "Appointment Deleted Successfully"

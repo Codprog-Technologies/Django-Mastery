@@ -31,6 +31,9 @@
                     {% endif %}
                         </ul>
                 </div>
+                <div class="card-footer text-end">
+                    <a class="btn btn-primary" href="{%url 'appointment_delete' pk=appointment.pk %}">Delete</a>
+                </div>
             </div>
         </div>
     {% endfor %}
