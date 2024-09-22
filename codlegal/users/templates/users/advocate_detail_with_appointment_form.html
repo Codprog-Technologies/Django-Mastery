@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{%block title %} CodLegal | Advocate Details {%endblock%}
+
+{%block content %}
+
+<div class="card mx-auto" style="width:36rem;">
+    <div class="card-header"><b>{{advocate_user.first_name| upper}} {{advocate_user.last_name | upper}}</b></div>
+    <div class="card-body" style="height:600px">
+        <ul class="list-group list-group-flush">
+            {% if advocate_user.advocate_profile.practice_areas.all %}
+            <li class="list-group-item">Practices
+                {% for area in advocate_user.advocate_profile.practice_areas.all %}
+                {{area}}
+                {% if not forloop.last %}
+                {% if forloop.revcounter == 2 %} and
+                {% else %},
+                {% endif %}
+                {% else %}
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </li>
+            <li class="list-group-item">Educational Qualifications:
+                {{advocate_user.advocate_profile.educational_qualifications}}
+            </li>
+        </ul>
+    </div>
+    <div class="card-footer bg-transparent">Practicing From: {{advocate_user.advocate_profile.practicing_from}}</div>
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+{%endblock%}
