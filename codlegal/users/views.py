@@ -1,13 +1,18 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Permission
+from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.decorators.http import require_http_methods
 from django.views.generic import DetailView, ListView
+from django.views.generic.edit import FormMixin
 
+from appointments.forms import AppointmentCreateForm
 from users import forms, models
 
 
@@ -209,6 +214,30 @@ class AdvocateDetailView(DetailView):
     def get_queryset(self):
         return super().get_queryset().filter(role=models.User.RoleChoices.ADVOCATE)
 
+
+class AdvocateDetailWithAppointmentFormView(SuccessMessageMixin, LoginRequiredMixin, FormMixin, DetailView):
+    model = models.User
+    form_class = AppointmentCreateForm
+    template_name = "users/advocate_detail_with_appointment_form.html"
+    context_object_name = "advocate_user"
+    success_message = "Appointment Was created Successfully"
+
+    def get_success_url(self):
+        return reverse("advocate_detail", kwargs={"pk": self.object.pk})
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        form.instance.client = self.request.user
+        form.instance.advocate = self.object
+        form.save()
+        return super().form_valid(form)
 
 class AdvocateListView(ListView):
     template_name = "users/advocate_list.html"

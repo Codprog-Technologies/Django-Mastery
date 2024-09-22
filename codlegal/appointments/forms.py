@@ -25,3 +25,10 @@ class PracticeAreaForm(forms.ModelForm):
         #     'name': forms.TextInput(attrs={"class": "form-control"}),
         #     'description': forms.Textarea(attrs={"class": "form-control"})
         # }
+
+
+class AppointmentCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = models.Appointment
+        fields = ['start_at']
