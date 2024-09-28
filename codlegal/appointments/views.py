@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -90,7 +90,13 @@ class UpcomingAppointmentListView(LoginRequiredMixin, ListView):
         return queryset.none()
 
 
-class AppointmentDeleteView(LoginRequiredMixin, SuccessMessageMixin, DeleteView):
+class AppointmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DeleteView):
     model = models.Appointment
     success_url = reverse_lazy("appointment_list")
     success_message = "Appointment Deleted Successfully"
+    permission_required = ["appointments.delete_appointment"]
+
+    def has_permission(self):
+        has_model_permission = super().has_permission()
+        appointment = self.get_object()
+        return has_model_permission and (self.request.user == appointment.client or self.request.user == appointment.advocate)
