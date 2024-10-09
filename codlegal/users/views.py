@@ -1,9 +1,11 @@
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Permission
 from django.contrib.messages.views import SuccessMessageMixin
+from django.core.mail import send_mail
 from django.db import transaction
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -132,6 +134,13 @@ def client_signup(request):
             permission = Permission.objects.get(codename="add_platformreview")
             user.user_permissions.add(permission)
             login(request, user)
+            send_mail(
+                "Welcome to CodLegal",
+                "We are glad that you joined us.",
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                fail_silently=False,
+            )
             return HttpResponse('Signup Successful')
         else:
             context = {
