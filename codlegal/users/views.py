@@ -104,6 +104,13 @@ def advocate_signup(request):
             phone_number.user = user
             phone_number.save()
             login(request, user)
+            send_mail(
+                "Welcome to CodLegal",
+                "Dear Advocate, We are glad that you joined us.",
+                settings.EMAIL_HOST_USER,
+                [user.email],
+                fail_silently=False,
+            )
             return HttpResponse('Signup Successful')
         else:
             context = {
