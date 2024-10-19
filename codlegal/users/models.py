@@ -64,3 +64,4 @@ class AdvocateProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="advocate_profile", related_query_name="advocate_profile")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
     practice_areas = models.ManyToManyField("appointments.PracticeArea", related_name="advocate_profile_set", related_query_name="advocate_profile")
+    image = models.ImageField(upload_to="profiles/", blank=True)
