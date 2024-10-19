@@ -91,7 +91,7 @@ def signup(request):
 def advocate_signup(request):
     if request.method == "POST":
         form = forms.AdvocateSignup(data=request.POST)
-        advocate_profile_form = forms.AdvocateProfileForm(data=request.POST)
+        advocate_profile_form = forms.AdvocateProfileForm(data=request.POST, files=request.FILES)
         phone_number_form = forms.PhoneNumberForm(data=request.POST)
         if form.is_valid() and advocate_profile_form.is_valid() and phone_number_form.is_valid():
             user = form.save()
@@ -180,7 +180,7 @@ def update_account(request):
                                                            instance=phone_numbers[1] if len(
                                                                phone_numbers) > 1 else None)
         if is_adv:
-            advocate_profile_form = forms.AdvocateProfileForm(data=request.POST, instance=request.user.advocate_profile)
+            advocate_profile_form = forms.AdvocateProfileForm(data=request.POST, files=request.FILES, instance=request.user.advocate_profile)
             if form.is_valid() and advocate_profile_form.is_valid() and phone_number_form1.is_valid() and \
                     (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
                 form.save()
