@@ -84,6 +84,11 @@ LOGGING = {
             'level': 'DEBUG',
             'propagate': False,
         },
+        'users': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
     },
 }
 # Application definition

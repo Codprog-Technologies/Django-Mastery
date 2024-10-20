@@ -1,3 +1,5 @@
+import logging
+
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -19,6 +21,7 @@ from users import forms, models
 
 
 # Create your views here.
+logger = logging.getLogger("users")
 
 def login_view(request):
     if request.method == "POST":
@@ -193,6 +196,7 @@ def update_account(request):
                     phone_number2.user = user
                     phone_number2.save()
                 messages.success(request, "Your profile was updated.")
+                logger.info("Profile Updated for user with email %s", user.email)
         else:
             if form.is_valid() and phone_number_form1.is_valid() and \
                     (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
@@ -203,6 +207,7 @@ def update_account(request):
                     phone_number2.user = user
                     phone_number2.save()
                 messages.success(request, "Your profile was updated.")
+                logger.info("Profile Updated for user with email %s", user.email)
         context = {
             "form": form,
             "advocate_profile_form": advocate_profile_form if is_adv else None,
