@@ -196,7 +196,8 @@ def update_account(request):
                     phone_number2.user = user
                     phone_number2.save()
                 messages.success(request, "Your profile was updated.")
-                logger.info("Profile Updated for user with email %s", user.email)
+                logger.info("Profile Updated for user with email %s", user.email,
+                            extra={'user_first_name': user.first_name})
         else:
             if form.is_valid() and phone_number_form1.is_valid() and \
                     (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
@@ -207,7 +208,8 @@ def update_account(request):
                     phone_number2.user = user
                     phone_number2.save()
                 messages.success(request, "Your profile was updated.")
-                logger.info("Profile Updated for user with email %s", user.email)
+                logger.info("Profile Updated for user with email %s", user.email,
+                            extra={'user_first_name': user.first_name})
         context = {
             "form": form,
             "advocate_profile_form": advocate_profile_form if is_adv else None,
