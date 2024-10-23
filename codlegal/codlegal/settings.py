@@ -45,13 +45,19 @@ LOGGING = {
             "()": "django.utils.log.ServerFormatter",
             "format": "[{server_time}] {message}",
             "style": "{",
+        },
+        "custom": {
+            "format": "%(name)s %(levelname)s %(message)s %(user_first_name)s"
         }
     },
     "handlers": {
         "console": {
-            "level": "INFO",
+            "level": "DEBUG",
             "filters": ["require_debug_true"],
             "class": "logging.StreamHandler",
+            "formatter": "custom",
+            # "class": "logging.FileHandler",
+            # "filename": "server.log"
         },
         "db_console": {
             "level": "DEBUG",
