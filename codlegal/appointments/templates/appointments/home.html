@@ -1,9 +1,10 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {%block title %} CodLegal | Home {%endblock%}
 
 {%block content %}
-<h1> We have Advocates with Below Practice Areas </h1>
+<h1> {%translate "We have Advocates with Below Practice Areas" %} </h1>
 <div class="row">
     {% for practice_area in practice_areas %}
     <div class="col-sm-6 my-3">

@@ -1,7 +1,12 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {%block title %} CodLegal | About {%endblock%}
 
 {%block content %}
-<h1> This is About Page </h1>
+<h1> {% translate "About Codlegal" %} </h1>
+
+<p>
+    {% translate "You can book world class advocates on our platform." %}
+</p>
 {%endblock%}

@@ -1,4 +1,6 @@
 {% extends "base.html" %}
+{% load i18n %}
+
 {%block title %} CodLegal | Advocate List {%endblock%}
 
 {%block content %}
@@ -26,13 +28,13 @@
                         {% endfor %}
                         {% endif %}
                     </li>
-                    <li class="list-group-item">Educational Qualifications:
+                    <li class="list-group-item">{% translate "Educational Qualifications"%}:
                         {{advocate_user.advocate_profile.educational_qualifications}}
                     </li>
                 </ul>
             </div>
             <div class="card-footer bg-transparent">
-                <a href="{% url 'advocate_detail' pk=advocate_user.pk %}">Advocate Details</a>
+                <a href="{% url 'advocate_detail' pk=advocate_user.pk %}">{% translate "Advocate Details" %}</a>
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.forms import BaseUserCreationForm
 from django.core import validators
+from django.utils.translation import gettext_lazy as _
 
 from users import models
 
@@ -95,9 +96,11 @@ class PhoneNumberForm(forms.ModelForm):
         model = models.PhoneNumber
         exclude = ["user"]
 
+
 class PhoneNumberOptionalForm(forms.ModelForm):
-    number = forms.CharField(label="Phone Number", max_length=20, validators=[validators.MinLengthValidator(9)],
+    number = forms.CharField(label=_("Phone Number"), max_length=20, validators=[validators.MinLengthValidator(9)],
                              required=False)
+
     class Meta:
         model = models.PhoneNumber
         exclude = ["user"]

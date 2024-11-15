@@ -42,8 +42,8 @@ class User(AbstractUser):
 
     username = None
     email = models.EmailField(_("email address"), blank=False, unique=True)
-    dob = models.DateField(null=True, verbose_name="Date of Birth")
-    role = models.CharField(max_length=2, choices=RoleChoices, blank=True)
+    dob = models.DateField(null=True, verbose_name=_("Date of Birth"))
+    role = models.CharField(max_length=2, choices=RoleChoices, blank=True, verbose_name=_("role"))
 
     REQUIRED_FIELDS = ["dob"]
     USERNAME_FIELD = "email"
@@ -52,16 +52,16 @@ class User(AbstractUser):
 
 
 class PhoneNumber(models.Model):
-    number = models.CharField("Phone Number", max_length=20, validators=[validators.MinLengthValidator(9)])
+    number = models.CharField(_("Phone Number"), max_length=20, validators=[validators.MinLengthValidator(9)])
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="phone_number_set", related_query_name="phone_number")
 
 
 class AdvocateProfile(models.Model):
 
-    website_url = models.URLField()
-    practicing_from = models.DateField()
-    educational_qualifications = models.CharField(max_length=30)
+    website_url = models.URLField(verbose_name=_("Website Url"))
+    practicing_from = models.DateField(verbose_name=_("Practicing From"))
+    educational_qualifications = models.CharField(max_length=30, verbose_name=_("Educational Qualifications"))
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="advocate_profile", related_query_name="advocate_profile")
     # user = models.ForeignKey(User, on_delete=models.CASCADE, unique=True)
     practice_areas = models.ManyToManyField("appointments.PracticeArea", related_name="advocate_profile_set", related_query_name="advocate_profile")
-    image = models.ImageField(upload_to="profiles/", blank=True)
+    image = models.ImageField(upload_to="profiles/", blank=True, verbose_name=_("Image"))

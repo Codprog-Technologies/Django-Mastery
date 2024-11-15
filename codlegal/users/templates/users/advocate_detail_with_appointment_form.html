@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {%block title %} CodLegal | Advocate Details {%endblock%}
 
@@ -24,12 +25,12 @@
                 {% endfor %}
                 {% endif %}
             </li>
-            <li class="list-group-item">Educational Qualifications:
+            <li class="list-group-item">{% translate "Educational Qualifications" %}:
                 {{advocate_user.advocate_profile.educational_qualifications}}
             </li>
         </ul>
     </div>
-    <div class="card-footer bg-transparent">Practicing From: {{advocate_user.advocate_profile.practicing_from}}</div>
+    <div class="card-footer bg-transparent">{% translate "Practicing From" %}: {{advocate_user.advocate_profile.practicing_from}}</div>
     <form method="POST">
         {% csrf_token %}
         {{form}}
