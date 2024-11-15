@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load i18n %}
 
 {%block title %} CodLegal | Upcoming Appointments {%endblock%}
 
@@ -7,15 +8,15 @@
     {% for appointment in object_list %}
         <div class="col-sm-6 my-3">
             <div class="card">
-                <div class="card-header">Appointment with id {{appointment.pk}} at {{appointment.start_at}}</div>
+                <div class="card-header">{% blocktranslate %}Appointment with id {{appointment.pk}} at {{appointment.start_at}} {% endblocktranslate %}</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
-                    <li class="list-group-item">This appointment was created on {{appointment.created_at}}</li>
-                    <li class="list-group-item">Advocate Name: {{appointment.advocate.first_name}} {{appointment.advocate.last_name}}</li>
-                    <li class="list-group-item">Client Name: {{appointment.client.first_name}} {{appointment.client.last_name}}</li>
-                    <li class="list-group-item">Client Email: {{appointment.client.email}}</li>
+                    <li class="list-group-item">{% blocktranslate with created_at=appointment.created_at %}This appointment was created on {{created_at}} {% endblocktranslate %}</li>
+                    <li class="list-group-item">{% translate "Advocate Name"%}: {{appointment.advocate.first_name}} {{appointment.advocate.last_name}}</li>
+                    <li class="list-group-item">{% translate "Client Name"%}: {{appointment.client.first_name}} {{appointment.client.last_name}}</li>
+                    <li class="list-group-item">{% translate "Client Email"%}: {{appointment.client.email}}</li>
                     {% if appointment.client.phone_number_set.all %}
-                        <li class="list-group-item">Client Contact Numbers:
+                        <li class="list-group-item">{% translate "Client Contact Numbers" %}:
                             {% for phone_number in appointment.client.phone_number_set.all %}
                                 {{phone_number.number}}
                                 {% if not forloop.last %}
@@ -27,7 +28,7 @@
                               {% endfor %}
                         </li>
                     {% else %}
-                        <li class="list-group-item">Contact Numbers not found</li>
+                        <li class="list-group-item">{% translate "Contact Numbers not found"%}</li>
                     {% endif %}
                         </ul>
                 </div>

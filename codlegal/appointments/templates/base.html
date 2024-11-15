@@ -1,4 +1,5 @@
 {% load static %}
+{% load i18n %}
 <html>
 <head>
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet"
@@ -14,7 +15,7 @@
                 <img src="{% static 'appointments/logo.webp' %}" alt="" width="30"
                      height="24"
                      class="d-inline-block align-text-top">
-                CodLegal
+                {% translate "CodLegal" %}
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -22,47 +23,47 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-link" href="{% url 'home' %}">Home</a>
-                    <a class="nav-link" href="{% url 'about' %}">About</a>
-                    <a class="nav-link" href="{% url 'advocate_list' %}">List Advocates</a>
+                    <a class="nav-link" href="{% url 'home' %}">{% translate "Home" %}</a>
+                    <a class="nav-link" href="{% url 'about' %}">{% translate "About"%}</a>
+                    <a class="nav-link" href="{% url 'advocate_list' %}">{% translate "List Advocates"%}</a>
                     {% if not user.is_authenticated %}
-                    <a class="nav-link" href="{% url 'login' %}">Login</a>
-                    <a class="nav-link" href="{% url 'password_reset' %}">Reset Password</a>
-                    {# <a class="nav-link" href="{% url 'signup' %}">Signup</a> #}
+                    <a class="nav-link" href="{% url 'login' %}">{% translate "Login"%}</a>
+                    <a class="nav-link" href="{% url 'password_reset' %}">{% translate "Reset Password"%}</a>
+                    {# <a class="nav-link" href="{% url 'signup' %}">{% translate "Signup"%}</a> #}
 
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Signup
+                            {% translate "Signup"%}
                         </a>
                         <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink">
-                            <li><a class="dropdown-item" href="{% url 'advocate_signup' %}">Advocate</a></li>
-                            <li><a class="dropdown-item" href="{% url 'client_signup' %}">Client</a></li>
+                            <li><a class="dropdown-item" href="{% url 'advocate_signup' %}">{% translate "Advocate"%}</a></li>
+                            <li><a class="dropdown-item" href="{% url 'client_signup' %}">{% translate "Client"%}</a></li>
                         </ul>
                     </div>
                     {% else %}
-                    <a class="nav-link" href="{% url 'appointment_list' %}">My Appointments</a>
-                    <a class="nav-link" href="{% url 'update_account' %}">My Account</a>
-                    <a class="nav-link" href="{% url 'password_change' %}">Change Password</a>
+                    <a class="nav-link" href="{% url 'appointment_list' %}">{% translate "My Appointments"%}</a>
+                    <a class="nav-link" href="{% url 'update_account' %}">{% translate "My Account"%}</a>
+                    <a class="nav-link" href="{% url 'password_change' %}">{% translate "Change Password"%}</a>
                     {% if perms.reviews %}
                     <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDarkDropdownMenuLink2" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Feedbacks
+                            {% translate "Feedbacks"%}
                         </a>
                         <ul class="dropdown-menu dropdown-menu" aria-labelledby="navbarDarkDropdownMenuLink2">
                             {% if perms.reviews.add_platformreview %}
-                            <li><a class="dropdown-item" href="{% url 'submit_app_review' %}">Submit Feedback</a></li>
+                            <li><a class="dropdown-item" href="{% url 'submit_app_review' %}">{% translate "Submit Feedback"%}</a></li>
                             {% endif %}
                             {% if perms.reviews.view_platformreview %}
-                            <li><a class="dropdown-item" href="{% url 'view_app_reviews' %}">View Feedbacks</a></li>
+                            <li><a class="dropdown-item" href="{% url 'view_app_reviews' %}">{% translate "View Feedbacks"%}</a></li>
                             {% endif %}
                         </ul>
                     </div>
                     {% endif %}
                     <form action="{% url 'logout' %}" style="margin-bottom:0;" method="POST">
                         {% csrf_token %}
-                        <button type="submit" class="nav-link" style="background:none;border:none;">Logout</button>
+                        <button type="submit" class="nav-link" style="background:none;border:none;">{% translate "Logout"%}</button>
                     </form>
                     {% endif %}
                 </div>
