@@ -47,7 +47,7 @@ LOGGING = {
             "style": "{",
         },
         "custom": {
-            "format": "%(name)s %(levelname)s %(message)s %(user_first_name)s"
+            "format": "%(name)s %(levelname)s %(message)s" #%(user_first_name)s
         }
     },
     "handlers": {
@@ -218,12 +218,19 @@ USE_TZ = True
 
 LANGUAGES = [
     ("en", "English"),
-    ("hi", "Hindi")
+    ("hi", "Hindi"),
+    ("id", "Indonesian")
 ]
 
 LOCALE_PATHS = [
     BASE_DIR / "localize"
 ]
+
+FORMAT_MODULE_PATH = [
+    "localize"
+]
+
+USE_THOUSAND_SEPARATOR = True
 
 
 # Static files (CSS, JavaScript, Images)

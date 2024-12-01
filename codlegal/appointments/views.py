@@ -34,6 +34,9 @@ def about(request):
 
 class AboutPage(TemplateView):
     template_name = "appointments/about.html"
+    extra_context = {
+        'number': 1000000
+    }
 
 
 def practice_area(request):
