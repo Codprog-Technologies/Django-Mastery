@@ -40,10 +40,16 @@ class User(AbstractUser):
         ADVOCATE = "AD", "Advocate"
         CLIENT = "CL", "Client"
 
+    class TimeZoneChoices(models.TextChoices):
+        ASIA_KOLKATA = "Asia/Kolkata", "Asia/Kolkata"
+        AMERICA_SAO_PAULO = "America/Sao_Paulo", "America/Sao_Paulo"
+        ASIA_JAKARATA = "Asia/Jakarta", "Asia/Jakarta"
+
     username = None
     email = models.EmailField(_("email address"), blank=False, unique=True)
     dob = models.DateField(null=True, verbose_name=_("Date of Birth"))
     role = models.CharField(max_length=2, choices=RoleChoices, blank=True, verbose_name=_("role"))
+    timezone = models.CharField(max_length=25, choices=TimeZoneChoices, default=TimeZoneChoices.ASIA_KOLKATA)
 
     REQUIRED_FIELDS = ["dob"]
     USERNAME_FIELD = "email"

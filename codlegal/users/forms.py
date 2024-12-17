@@ -79,7 +79,7 @@ class ClientSignup(UserSignupForm):
 class UserUpdateForm(forms.ModelForm):
     class Meta:
         model = models.User
-        fields = ("first_name", "last_name")
+        fields = ("first_name", "last_name", "timezone")
 
 
 class AdvocateProfileForm(forms.ModelForm):

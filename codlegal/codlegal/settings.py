@@ -123,6 +123,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "appointments.middlewares.TimezoneMiddleware"
 ]
 
 ROOT_URLCONF = "codlegal.urls"
@@ -216,6 +217,8 @@ TIME_ZONE = "Asia/Kolkata"
 USE_I18N = True
 
 USE_TZ = True
+
+TIMEZONE_SESSION_KEY = "django_timezone"
 
 LANGUAGES = [
     ("en", "English"),

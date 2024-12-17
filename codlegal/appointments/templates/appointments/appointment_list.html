@@ -8,7 +8,7 @@
     {% for appointment in object_list %}
         <div class="col-sm-6 my-3">
             <div class="card">
-                <div class="card-header">{% blocktranslate %}Appointment with id {{appointment.pk}} at {{appointment.start_at}} {% endblocktranslate %}</div>
+                <div class="card-header">{% blocktranslate with appointment_pk=appointment.pk appointment_start_at=appointment.start_at %}Appointment with id {{appointment_pk}} at {{appointment_start_at}} {% endblocktranslate %}</div>
                 <div class="card-body">
                     <ul class="list-group list-group-flush">
                     <li class="list-group-item">{% blocktranslate with created_at=appointment.created_at %}This appointment was created on {{created_at}} {% endblocktranslate %}</li>
