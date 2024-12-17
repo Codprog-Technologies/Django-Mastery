@@ -3,9 +3,11 @@ import logging
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import Permission
+from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.db import transaction
@@ -19,9 +21,9 @@ from django.views.generic.edit import FormMixin
 from appointments.forms import AppointmentCreateForm
 from users import forms, models
 
-
 # Create your views here.
 logger = logging.getLogger("users")
+
 
 def login_view(request):
     if request.method == "POST":
@@ -62,6 +64,15 @@ def login_view_django_form(request):
             "form": forms.UserAuthenticationForm()
         }
         return render(request, "users/login_with_django_form.html", context)
+
+
+class CustomLoginView(LoginView):
+
+    def form_valid(self, form):
+        """Security check complete. Log the user in."""
+        auth_login(self.request, form.get_user())
+        self.request.session[settings.TIMEZONE_SESSION_KEY] = form.get_user().timezone
+        return HttpResponseRedirect(self.get_success_url())
 
 
 @require_http_methods(["POST"])
@@ -183,10 +194,12 @@ def update_account(request):
                                                            instance=phone_numbers[1] if len(
                                                                phone_numbers) > 1 else None)
         if is_adv:
-            advocate_profile_form = forms.AdvocateProfileForm(data=request.POST, files=request.FILES, instance=request.user.advocate_profile)
+            advocate_profile_form = forms.AdvocateProfileForm(data=request.POST, files=request.FILES,
+                                                              instance=request.user.advocate_profile)
             if form.is_valid() and advocate_profile_form.is_valid() and phone_number_form1.is_valid() and \
                     (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
-                form.save()
+                updated_user = form.save()
+                request.session[settings.TIMEZONE_SESSION_KEY] = updated_user.timezone
                 phone_number = phone_number_form1.save(commit=False)
                 phone_number.user = user
                 phone_number.save()
@@ -201,7 +214,8 @@ def update_account(request):
         else:
             if form.is_valid() and phone_number_form1.is_valid() and \
                     (not phone_number_form2.has_changed() or phone_number_form2.is_valid()):
-                form.save()
+                updated_user = form.save()
+                request.session[settings.TIMEZONE_SESSION_KEY] = updated_user.timezone
                 phone_number_form1.save()
                 if phone_number_form2.has_changed():
                     phone_number2 = phone_number_form2.save(commit=False)
@@ -261,6 +275,7 @@ class AdvocateDetailWithAppointmentFormView(SuccessMessageMixin, LoginRequiredMi
         form.instance.advocate = self.object
         form.save()
         return super().form_valid(form)
+
 
 class AdvocateListView(ListView):
     template_name = "users/advocate_list.html"
