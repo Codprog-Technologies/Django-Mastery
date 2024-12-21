@@ -102,4 +102,5 @@ class AppointmentDeleteView(LoginRequiredMixin, PermissionRequiredMixin, Success
     def has_permission(self):
         has_model_permission = super().has_permission()
         appointment = self.get_object()
-        return has_model_permission and (self.request.user == appointment.client or self.request.user == appointment.advocate)
+        return has_model_permission and (
+                    self.request.user == appointment.client or self.request.user == appointment.advocate)
