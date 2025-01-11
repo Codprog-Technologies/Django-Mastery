@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name="Products",
+            name="Product",
             fields=[
                 (
                     "id",
