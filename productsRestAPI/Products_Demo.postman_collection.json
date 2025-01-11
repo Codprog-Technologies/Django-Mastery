@@ -7,9 +7,9 @@
 	},
 	"item": [
 		{
-			"name": "Create Product",
+			"name": "Products API options",
 			"request": {
-				"method": "POST",
+				"method": "OPTIONS",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -37,7 +37,7 @@
 			"response": []
 		},
 		{
-			"name": "Django-specializations",
+			"name": "Create Product",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -49,37 +49,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\n        \"model\": \"core.Specialization\",\n        \"fields\": {\n            \"name\": \"2013-01-16T08:16:59.844Z\",\n            \"description\": \"this is description\"\n        }\n    }]"
-				},
-				"url": {
-					"raw": "http://localhost:8000/django-specializations/",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "8000",
-					"path": [
-						"django-specializations",
-						""
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Products API options",
-			"request": {
-				"method": "OPTIONS",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"name\": \"pen\",\n    \"price\": 1\n}"
+					"raw": "{\n    \"name\": \"Pencil\",\n    \"price\": 10\n}"
 				},
 				"url": {
 					"raw": "http://localhost:8000/products/",
@@ -244,7 +214,7 @@
 			"response": []
 		},
 		{
-			"name": "Create User (Without using DRF)",
+			"name": "Create Product (Without using DRF)",
 			"request": {
 				"method": "POST",
 				"header": [
@@ -256,17 +226,16 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "[{\n    \"model\": \"users.User\",\n    \"fields\": {\n            \"first_name\": \"django\",\n            \"last_name\": \"user\",\n            \"password\": \"password\",\n            \"username\": \"test_user\",\n            \"role\": \"DOCTOR\",\n            \"email\": \"doctor@mailinator.com\"\n        }\n}]"
+					"raw": "[{\n    \"model\": \"products.Product\",\n    \"fields\": {\n            \"name\": \"Eraser\",\n            \"price\": 5\n        }\n}]"
 				},
 				"url": {
-					"raw": "localhost:8000/api/django-users/",
+					"raw": "localhost:8000/django-create-product/",
 					"host": [
 						"localhost"
 					],
 					"port": "8000",
 					"path": [
-						"api",
-						"django-users",
+						"django-create-product",
 						""
 					]
 				}
