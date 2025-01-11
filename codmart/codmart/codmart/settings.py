@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'rest_framework',
     "django.contrib.admin",
     "django.contrib.auth",
@@ -80,6 +81,9 @@ DATABASES = {
         "NAME": BASE_DIR / "db.sqlite3",
     }
 }
+
+AUTH_USER_MODEL = "users.User"
+
 
 
 # Password validation
