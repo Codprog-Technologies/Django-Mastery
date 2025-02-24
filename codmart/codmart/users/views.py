@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from rest_framework import status
+from rest_framework import status, views, generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -26,3 +25,21 @@ def create_user_api(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED) # serialization
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+# class CreateUserView(views.APIView):
+#     def post(self, request):
+#         serializer = serializers.UserSerializer(data=request.data)  # deserialization and validation
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)  # serialization
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CreateUserView(generics.CreateAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
+
+
+class DestroyUserView(generics.DestroyAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer

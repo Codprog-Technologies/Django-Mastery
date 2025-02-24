@@ -8,10 +8,16 @@ class UserSerializer(serializers.ModelSerializer):
     # first_name = serializers.CharField(max_length=150, required=True)
     class Meta:
         model = models.User
-        fields = "__all__"
+        exclude = ('groups', 'user_permissions')
         extra_kwargs = {
             'password': {'write_only': True, 'validators': [validators.MinLengthValidator(5)]},
-            'first_name': {'required': True}
+            'first_name': {'required': True},
+            'role': {'required': True},
+            'last_login': {'read_only': True},
+            'date_joined': {'read_only': True},
+            'is_staff': {'read_only': True},
+            'is_active': {'read_only': True},
+            'is_superuser': {'read_only': True},
         }
 
     def validate_username(self, username):
