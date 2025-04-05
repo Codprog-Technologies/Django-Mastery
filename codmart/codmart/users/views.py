@@ -19,10 +19,10 @@ def create_user_api(request):
         # return Response(request.data, status=status.HTTP_201_CREATED)
         # deserialization and validation -> request.data -> user
         # serialization -> user -> dict
-        serializer = serializers.UserSerializer(data=request.data) # deserialization and validation
+        serializer = serializers.UserSerializer(data=request.data)  # deserialization and validation
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED) # serialization
+            return Response(serializer.data, status=status.HTTP_201_CREATED)  # serialization
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -44,6 +44,17 @@ class DestroyUserView(generics.DestroyAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
 
+
 class UpdateUserView(generics.UpdateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserUpdateSerializer
+
+
+class RetrieveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserUpdateSerializer
+
+
+class ListCreateUserView(generics.ListCreateAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserSerializer
