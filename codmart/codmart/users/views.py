@@ -43,3 +43,7 @@ class CreateUserView(generics.CreateAPIView):
 class DestroyUserView(generics.DestroyAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
+
+class UpdateUserView(generics.UpdateAPIView):
+    queryset = models.User.objects.all()
+    serializer_class = serializers.UserUpdateSerializer

@@ -34,3 +34,23 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return models.User.objects.create_user(**validated_data)
+
+
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.User
+        exclude = ('groups', 'user_permissions', 'password')
+        extra_kwargs = {
+            'first_name': {'required': True},
+            'role': {'required': True},
+            'last_login': {'read_only': True},
+            'date_joined': {'read_only': True},
+            'is_staff': {'read_only': True},
+            'is_active': {'read_only': True},
+            'is_superuser': {'read_only': True},
+            'username': {'read_only': True},
+            'email': {'read_only': True},
+        }
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)
