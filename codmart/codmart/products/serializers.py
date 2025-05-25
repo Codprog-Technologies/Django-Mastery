@@ -24,7 +24,7 @@ class ProductSerializer(serializers.ModelSerializer):
         return product
 
     def update(self, instance, validated_data):
-        if validated_data.get('productimage_set'):
+        if 'productimage_set' in validated_data:
             images = validated_data.pop('productimage_set')
             instance.productimage_set.all().delete()
             for image in images:
