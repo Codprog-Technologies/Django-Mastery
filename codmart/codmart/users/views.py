@@ -1,8 +1,9 @@
-from rest_framework import status, views, generics
+from rest_framework import status, views, generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from users import models, serializers
+from users.permissions import IsOwner
 
 
 # Create your views here.
@@ -53,8 +54,17 @@ class UpdateUserView(generics.UpdateAPIView):
 class RetrieveUpdateDestroyUserView(generics.RetrieveUpdateDestroyAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserUpdateSerializer
+    permission_classes = [IsOwner]
 
 
 class ListCreateUserView(generics.ListCreateAPIView):
     queryset = models.User.objects.all()
     serializer_class = serializers.UserSerializer
+
+    # create (POST) -> AllowAny
+    # listing (GET) -> Admin Users
+
+    def get_permissions(self):
+        if self.request.method == "POST":
+            return [permissions.AllowAny()]
+        return [permissions.IsAdminUser()]
