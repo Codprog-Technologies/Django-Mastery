@@ -1,9 +1,13 @@
 from dj_rest_auth.views import PasswordChangeView, PasswordResetView, PasswordResetConfirmView
 from django.urls import path
+from rest_framework import routers
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
 
 from users import views
 from rest_framework.authtoken.views import obtain_auth_token
+
+router = routers.SimpleRouter()
+router.register('addresses', views.AddressViewSet, 'address')
 
 urlpatterns = [
     # path('', views.CreateUserView.as_view(), name="create_user"),
@@ -18,4 +22,4 @@ urlpatterns = [
     path('password/change/', PasswordChangeView.as_view(), name='rest_password_change'),
     path('password/reset/', PasswordResetView.as_view(), name='rest_password_reset'),
     path('password/reset/confirm/', PasswordResetConfirmView.as_view(), name='rest_password_reset_confirm'),
-]
+] + router.urls
