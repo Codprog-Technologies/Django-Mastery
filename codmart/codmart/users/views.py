@@ -1,4 +1,4 @@
-from rest_framework import status, views, generics, permissions
+from rest_framework import status, views, generics, permissions, viewsets
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
@@ -68,3 +68,12 @@ class ListCreateUserView(generics.ListCreateAPIView):
         if self.request.method == "POST":
             return [permissions.AllowAny()]
         return [permissions.IsAdminUser()]
+
+
+class AddressViewSet(viewsets.ModelViewSet):
+    # queryset = models.Address.objects.all()
+    serializer_class = serializers.AddressSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return models.Address.objects.filter(user=self.request.user)
