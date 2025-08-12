@@ -158,6 +158,8 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
+STRIPE_API_KEY = os.environ.get("STRIPE_API_KEY")
+
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587

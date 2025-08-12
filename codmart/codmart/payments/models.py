@@ -9,12 +9,19 @@ class OrderStatus(models.TextChoices):
     CONFIRMED = "CONFIRMED", "Confirmed"
     DELIVERED = "DELIVERED", "Delivered"
 
+class PaymentChannel(models.TextChoices):
+    COD = "COD", "Cash On Delivery"
+    ONLINE = "ONLINE", "Online Payment"
+
 
 class Order(models.Model):
 
     address = models.ForeignKey("users.Address", on_delete=models.SET_NULL, null=True)
     user = models.ForeignKey(get_user_model(), on_delete=models.PROTECT)
     product = models.ForeignKey("products.Product", on_delete=models.SET_NULL, null=True)
+
+    payment_channel = models.CharField(max_length=10, choices=PaymentChannel)
+    pg_id = models.CharField(max_length=50, blank=True)
 
     total_amount = models.DecimalField(max_digits=8, decimal_places=2)
     status = models.CharField(max_length=15, choices=OrderStatus)
