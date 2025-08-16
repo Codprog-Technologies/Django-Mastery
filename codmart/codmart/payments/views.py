@@ -1,14 +1,14 @@
 import stripe
 from django.conf import settings
-from rest_framework import mixins, viewsets, permissions, status
+from rest_framework import mixins, viewsets, permissions, status, views
 from rest_framework.response import Response
 
 from payments import models, serializers
 
-
 # Create your views here.
 
 stripe.api_key = settings.STRIPE_API_KEY
+
 
 class OrderViewSet(mixins.CreateModelMixin,
                    mixins.RetrieveModelMixin,
@@ -46,3 +46,11 @@ class OrderViewSet(mixins.CreateModelMixin,
             return payment_intent.client_secret
         else:
             serializer.save()
+
+
+class StripeWebhookView(views.APIView):
+    authentication_classes = []
+    permission_classes = []
+
+    def post(self, request, *args, **kwargs):
+        return Response(status=status.HTTP_200_OK)
