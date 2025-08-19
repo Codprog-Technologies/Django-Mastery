@@ -50,7 +50,19 @@ class OrderViewSet(mixins.CreateModelMixin,
 
 class StripeWebhookView(views.APIView):
     authentication_classes = []
-    permission_classes = []
+    permission_classes = [permissions.AllowAny]
 
     def post(self, request, *args, **kwargs):
+        signature_in_header = request.META['HTTP_STRIPE_SIGNATURE']
+        event = stripe.Webhook.construct_event(
+            payload=request.body, sig_header=signature_in_header, secret=settings.STRIPE_WEBHOOK_SECRET)
+
+        if event.type == "payment_intent.succeeded":
+            order = models.Order.objects.get(pg_id=event.data['object']['id'])
+            order.status = models.OrderStatus.CONFIRMED
+            order.save()
+        elif event.type == "payment_intent.payment_failed":
+            order = models.Order.objects.get(pg_id=event.data['object']['id'])
+            order.status = models.OrderStatus.FAILED
+            order.save()
         return Response(status=status.HTTP_200_OK)
