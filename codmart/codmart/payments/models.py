@@ -8,6 +8,7 @@ class OrderStatus(models.TextChoices):
     CREATED = "CREATED", "Created"
     CONFIRMED = "CONFIRMED", "Confirmed"
     DELIVERED = "DELIVERED", "Delivered"
+    FAILED = "FAILED", "Failed"
 
 class PaymentChannel(models.TextChoices):
     COD = "COD", "Cash On Delivery"
