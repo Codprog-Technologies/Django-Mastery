@@ -1,0 +1,36 @@
+name: codmart
+
+services:
+  api:
+    container_name: codmart_api
+    build:
+      context: .
+    image: codprog/codmart
+    ports:
+      - "80:8000"
+    command: >
+      sh -c "python codmart/manage.py migrate &&\
+             python codmart/manage.py runserver 0.0.0.0:8000"
+    env_file:
+      - env.file
+#    networks:
+#      - custom_bridge
+
+
+  db:
+    container_name: db
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db_vol:/var/lib/postgresql/data
+#    networks:
+#      - custom_bridge
+    ports:
+      - 65432:5432
+
+volumes:
+  db_vol:
+
+#networks:
+#  custom_bridge:
