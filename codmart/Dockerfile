@@ -2,7 +2,7 @@ FROM python:3.12-alpine
 
 COPY ./codmart/ codmart/
 
-RUN apk add postgresql-dev
+RUN apk add postgresql-dev curl
 
 COPY ./requirements.txt requirements.txt
 
